@@ -99,7 +99,7 @@ describe("voting_dapp", () => {
   })
 
   // Register a candidate
-  it.only("Register Candidate", async () => {
+  it("Register Candidate", async () => {
     const pollId = new anchor.BN(1);
     console.log("pollId: ", pollId);
 
@@ -146,5 +146,45 @@ describe("voting_dapp", () => {
     expect(candidate.name).equal("Crunchy");
     expect(candidate.pollId.toNumber()).equal(pollId.toNumber());
     expect(candidate.totalVotes.toNumber()).equal(0);
+  })
+
+  // Cast a vote
+  it.only("Cast Vote", async () => {
+    
+    const [pollAddress] = PublicKey.findProgramAddressSync(
+      [
+        Buffer.from("poll"),
+        new anchor.BN(1).toArrayLike(Buffer, 'le', 8) // Poll 1; first one to be created
+      ],
+      program.programId
+    );
+    const poll = await program.account.poll.fetch(pollAddress);
+
+    const [candidateAddress] = PublicKey.findProgramAddressSync(
+      [
+        Buffer.from("candidate"),
+        poll.pollId.toArrayLike(Buffer, 'le', 8),
+        new anchor.BN(1).toArrayLike(Buffer, 'le', 8) // First candidate to be registered assuming registered under poll 1
+      ],
+      program.programId
+    );
+    let candidate = await program.account.candidate.fetch(candidateAddress);
+
+    await program.methods.vote(
+      candidate.candidateId,
+      poll.pollId
+    )
+    .accounts({
+      signer: program.provider.publicKey,
+      candidate: candidateAddress,
+      poll: pollAddress,
+      system_program: SystemProgram.programId
+    })
+    .rpc();
+
+    candidate = await program.account.candidate.fetch(candidateAddress);
+    console.log("candidate: ", candidate);
+
+    expect(candidate.totalVotes.toNumber()).greaterThan(0);
   })
 });
