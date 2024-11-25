@@ -44,7 +44,7 @@ pub struct RegisterCandidate<'info> {
 
     #[account(
         mut,
-        seeds = [b"counter"],
+        seeds = [b"registrations"],
         bump
     )]
     pub registrations: Account<'info, registrations::Registrations>,
