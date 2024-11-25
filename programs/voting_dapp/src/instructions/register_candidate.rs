@@ -43,6 +43,7 @@ pub struct RegisterCandidate<'info> {
     pub poll: Account<'info, poll::Poll>,
 
     #[account(
+        mut,
         seeds = [b"counter"],
         bump
     )]
