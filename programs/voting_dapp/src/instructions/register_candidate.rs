@@ -11,13 +11,14 @@ pub fn register_candidate(
 ) -> Result<()> {
     let candidate = &mut ctx.accounts.candidate;
     let registrations = &mut ctx.accounts.registrations;
-    let poll = &ctx.accounts.poll;
+    let poll = &mut ctx.accounts.poll;
 
     if poll_id != poll.poll_id {
         return Err(VotingDappErrors::InvalidPollIdProvided.into())
     }
 
     registrations.count += 1;
+    poll.candidate_count += 1;
 
     candidate.candidate_id = registrations.count;
     candidate.name = candidate_name;

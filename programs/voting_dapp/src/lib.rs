@@ -36,4 +36,12 @@ pub mod voting_dapp {
     ) -> Result<()> {
         register_candidate::register_candidate(ctx, candidate_name, poll_id)
     }
+
+    pub fn vote(
+        ctx: Context<Vote>,
+        candidate_id: u64,
+        poll_id: u64
+    ) -> Result<()> {
+        vote::vote(ctx, candidate_id, poll_id)
+    }
 }
