@@ -2,6 +2,16 @@ use anchor_lang::prelude::*;
 use crate::constants;
 use crate::state::{counter, registrations};
 
+pub fn initialise_counters(ctx: Context<InitialiseCounters>) -> Result<()> {
+    let counter = &mut ctx.accounts.counter;
+    let registrations = &mut ctx.accounts.registrations;
+
+    counter.count = 0;
+    registrations.count = 0;
+    
+    Ok(())
+}
+
 #[derive(Accounts)]
 pub struct InitialiseCounters<'info> {
     #[account(mut)]
