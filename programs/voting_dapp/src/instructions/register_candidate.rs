@@ -22,6 +22,7 @@ pub fn register_candidate(
     candidate.candidate_id = registrations.count;
     candidate.name = candidate_name;
     candidate.poll_id = poll.poll_id;
+    candidate.total_votes = 0;
     msg!("Candidate successfully registered");
 
     Ok(())

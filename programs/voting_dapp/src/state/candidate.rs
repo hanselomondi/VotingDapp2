@@ -6,5 +6,6 @@ pub struct Candidate {
     pub candidate_id: u64,
     pub poll_id: u64,
     #[max_len(50)]
-    pub name: String
+    pub name: String,
+    pub total_votes: u64
 }
