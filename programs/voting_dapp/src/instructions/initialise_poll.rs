@@ -39,7 +39,7 @@ pub struct InitialisePoll<'info> {
         init,
         payer = signer,
         space = constants::ANCHOR_DESCRIMINATOR_SIZE + poll::Poll::INIT_SPACE,
-        seeds = [b"poll", (counter.count).to_le_bytes().as_ref()],
+        seeds = [b"poll", (counter.count + 1).to_le_bytes().as_ref()],
         bump
     )]
     pub poll: Account<'info, poll::Poll>,
