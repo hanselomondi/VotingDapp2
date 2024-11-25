@@ -12,8 +12,6 @@ declare_id!("E8a4H9J2LU5PshFfKEifsLUNREwhhrRnkLQtv4RL26vM");
 
 #[program]
 pub mod voting_dapp {
-    use register_candidate::RegisterCandidate;
-
     use super::*;
 
     pub fn initialise_counters(ctx: Context<InitialiseCounters>) -> Result<()> {
