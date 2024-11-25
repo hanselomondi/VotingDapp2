@@ -9,5 +9,11 @@ pub enum VotingDappErrors {
     #[msg("Poll cannot end before current time")]
     InvalidPollTime,
     #[msg("Invalid poll id provided")]
-    InvalidPollIdProvided
+    InvalidPollIdProvided,
+    #[msg("Poll not active.")]
+    PollNotActive,
+    #[msg("Poll has closed")]
+    PollClosed,
+    #[msg("You cannot vote more than once")]
+    AlreadyVoted
 }
